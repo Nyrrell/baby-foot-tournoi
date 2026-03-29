@@ -25,6 +25,12 @@ export class UsersService {
     return user;
   }
 
+  async findByUsername(username: string): Promise<User | null> {
+    const user = await this.userModel.findOne({ where: { username } });
+    if (!user) throw new NotFoundException(`L'utilisateur n'existe pas`);
+    return user;
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findOne(id);
     if (updateUserDto.password) {
