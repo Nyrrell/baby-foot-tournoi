@@ -1,0 +1,16 @@
+FROM node:22-alpine AS build
+WORKDIR /app
+RUN corepack enable pnpm
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+COPY . .
+RUN pnpm build
+
+FROM node:22-alpine
+WORKDIR /app
+RUN corepack enable pnpm
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/package.json /app/pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod
+EXPOSE 3000
+CMD ["node", "dist/main"]
