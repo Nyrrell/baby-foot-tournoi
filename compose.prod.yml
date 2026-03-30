@@ -1,0 +1,50 @@
+services:
+  mysql:
+    image: docker.io/mysql:9.6
+    container_name: tournoi-baby-foot-db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tournoi_baby_foot
+      MYSQL_USER: tournoi
+      MYSQL_PASSWORD: ionruot
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Containerfile
+    container_name: tournoi-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: tournoi_baby_foot
+      DB_USERNAME: tournoi
+      DB_PASSWORD: ionruot
+      JWT_SECRET: secret_tournoi_baby_foot
+    depends_on:
+      mysql:
+        condition: service_started
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Containerfile
+    container_name: tournoi-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:3000"
+    environment:
+      NUXT_API_URL: http://backend:3000/api
+      NUXT_PUBLIC_API_URL: http://localhost:3000/api
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
