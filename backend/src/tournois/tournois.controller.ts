@@ -20,11 +20,13 @@ export class TournoisController {
     return this.tournoisService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.tournoisService.findOne(id);
   }
 
+  @Public()
   @Get(':id/classements')
   getClassements(@Param('id', ParseIntPipe) id: number) {
     return this.tournoisService.getClassements(id);

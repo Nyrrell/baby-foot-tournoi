@@ -2,11 +2,13 @@ import { Controller, Get, Post, Patch, Delete, Param, Body, ParseIntPipe } from 
 
 import { UpdateMatchDto } from './dto/update-match.dto';
 import { MatchsService } from './matchs.service';
+import { Public } from '../auth/auth.guard';
 
 @Controller()
 export class MatchsController {
   constructor(private readonly matchsService: MatchsService) {}
 
+  @Public()
   @Get('tournois/:tournoiId/matchs')
   findAll(@Param('tournoiId', ParseIntPipe) tournoiId: number) {
     return this.matchsService.findAllByTournoi(tournoiId);
