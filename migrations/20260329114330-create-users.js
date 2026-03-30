@@ -2,11 +2,12 @@
 
 const { DataTypes } = require('sequelize');
 const argon2 = require('argon2');
+const tableName = 'users';
 
 /** @type {import('umzug').MigrationFn} */
 module.exports = {
   async up({ context: queryInterface }) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable(tableName, {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
@@ -39,7 +40,7 @@ module.exports = {
 
     const [adminHash, userHash] = await Promise.all([argon2.hash('nimda'), argon2.hash('resu')]);
 
-    await queryInterface.bulkInsert('users', [
+    await queryInterface.bulkInsert(tableName, [
       {
         username: 'admin',
         password: adminHash,
@@ -58,6 +59,6 @@ module.exports = {
   },
 
   async down({ context: queryInterface }) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable(tableName);
   },
 };
