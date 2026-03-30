@@ -12,6 +12,11 @@ services:
       MYSQL_PASSWORD: ionruot
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "tournoi", "-pionruot" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   backend:
     build:
@@ -30,7 +35,7 @@ services:
       JWT_SECRET: secret_tournoi_baby_foot
     depends_on:
       mysql:
-        condition: service_started
+        condition: service_healthy
 
   frontend:
     build:
