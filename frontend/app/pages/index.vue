@@ -5,7 +5,7 @@
         <h1 class="text-2xl font-bold">Tournois</h1>
         <p class="text-sm text-gray-500 mt-1">{{ tournois?.length ?? 0 }} tournoi(s) enregistré(s)</p>
       </div>
-      <UButton v-if="isLoggedIn" label="Créer un tournoi" icon="i-lucide-plus" @click="showCreate = true" />
+      <UButton v-if="isLoggedIn && isAdmin" label="Créer un tournoi" icon="i-lucide-plus" @click="showCreate = true" />
     </div>
 
     <div v-if="pending" class="flex justify-center py-20">
