@@ -12,6 +12,9 @@ async function bootstrap() {
   await migrationsService.up();
 
   app.setGlobalPrefix('api');
-  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+  await app.listen({
+    port: parseInt(process.env.PORT || '3000', 10),
+    host: process.env.HOST ?? 'localhost',
+  });
 }
 bootstrap();

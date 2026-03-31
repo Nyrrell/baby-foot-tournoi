@@ -33,6 +33,7 @@ services:
       DB_USERNAME: tournoi
       DB_PASSWORD: ionruot
       JWT_SECRET: secret_tournoi_baby_foot
+      HOST: 0.0.0.0
     depends_on:
       mysql:
         condition: service_healthy
