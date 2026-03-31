@@ -10,4 +10,9 @@ export default defineNuxtConfig({
       apiUrl: 'http://localhost:3000/api',
     },
   },
+  app: {
+    head: {
+      title: 'Tournoi Baby Foot'
+    }
+  }
 });
