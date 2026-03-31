@@ -9,8 +9,12 @@
         </p>
         <UForm :state="scoreForm" :validate="validateScoreForm" class="space-y-4" @submit="handleSubmit">
           <div class="grid grid-cols-2 gap-4">
-            <UInput v-model="scoreForm.equipe1Score" type="number" min="0" class="w-full text-center" />
-            <UInput v-model="scoreForm.equipe2Score" type="number" min="0" class="w-full text-center" />
+            <UFormField name="equipe1Score">
+              <UInput v-model="scoreForm.equipe1Score" type="number" min="0" class="w-full text-center" />
+            </UFormField>
+            <UFormField name="equipe2Score">
+              <UInput v-model="scoreForm.equipe2Score" type="number" min="0" class="w-full text-center" />
+            </UFormField>
           </div>
           <div class="flex justify-end gap-2">
             <UButton label="Annuler" variant="ghost" @click="open = false" />
